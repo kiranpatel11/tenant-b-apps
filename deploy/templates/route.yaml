@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    app.kubernetes.io/managed-by: tenant-b-apps
+    platform.ocp-gitops.io/tenant: tenant-b
+spec:
+  to:
+    kind: Service
+    name: {{ .Values.appName }}
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
