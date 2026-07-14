@@ -1,0 +1,15 @@
+{{- if .Values.redis.enabled }}
+apiVersion: app.redislabs.com/v1alpha1
+kind: RedisEnterpriseDatabase
+metadata:
+  name: {{ .Values.redis.database.name }}
+  labels:
+    app: redis-enterprise
+    app.kubernetes.io/managed-by: tenant-b-apps
+    platform.ocp-gitops.io/tenant: tenant-b
+spec:
+  redisEnterpriseCluster:
+    name: {{ .Values.redis.rec.name }}
+  memorySize: {{ .Values.redis.database.memorySize }}
+  tlsMode: {{ .Values.redis.database.tlsMode }}
+{{- end }}

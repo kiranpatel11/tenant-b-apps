@@ -18,4 +18,6 @@ jobs:
       - name: Lint and render tenant chart
         run: |
           helm lint deploy
-          helm template tenant-b deploy -f deploy/values.yaml --namespace tenant-b
+          helm template tenant-b deploy -f deploy/values.yaml --namespace tenant-b | tee /tmp/rendered.yaml
+          grep -q 'kind: RedisEnterpriseCluster' /tmp/rendered.yaml
+          grep -q 'kind: RedisEnterpriseDatabase' /tmp/rendered.yaml

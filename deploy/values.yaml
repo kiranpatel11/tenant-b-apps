@@ -2,3 +2,18 @@ appName: tenant-b-hello
 image: registry.redhat.io/ubi9/httpd-24:latest
 replicas: 1
 routeHost: tenant-b-hello
+
+redis:
+  enabled: true
+  rec:
+    name: rec
+    nodes: 1
+    memory: 2Gi
+    cpu: "1"
+    persistentVolumeSize: 10Gi
+    apiFqdnUrl: api-rec-tenant-b.apps.cluster-gf2fv.gf2fv.sandbox400.opentlc.com
+    dbFqdnSuffix: -db-rec-tenant-b.apps.cluster-gf2fv.gf2fv.sandbox400.opentlc.com
+  database:
+    name: app-db
+    memorySize: 256MB
+    tlsMode: disabled

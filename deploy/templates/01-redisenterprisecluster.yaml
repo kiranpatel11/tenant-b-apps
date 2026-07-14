@@ -1,0 +1,26 @@
+{{- if .Values.redis.enabled }}
+apiVersion: app.redislabs.com/v1
+kind: RedisEnterpriseCluster
+metadata:
+  name: {{ .Values.redis.rec.name }}
+  labels:
+    app: redis-enterprise
+    app.kubernetes.io/managed-by: tenant-b-apps
+    platform.ocp-gitops.io/tenant: tenant-b
+spec:
+  nodes: {{ .Values.redis.rec.nodes }}
+  persistentSpec:
+    enabled: true
+    volumeSize: {{ .Values.redis.rec.persistentVolumeSize }}
+  redisEnterpriseNodeResources:
+    requests:
+      cpu: {{ .Values.redis.rec.cpu | quote }}
+      memory: {{ .Values.redis.rec.memory }}
+    limits:
+      cpu: {{ .Values.redis.rec.cpu | quote }}
+      memory: {{ .Values.redis.rec.memory }}
+  ingressOrRouteSpec:
+    method: openShiftRoute
+    apiFqdnUrl: {{ .Values.redis.rec.apiFqdnUrl }}
+    dbFqdnSuffix: {{ .Values.redis.rec.dbFqdnSuffix }}
+{{- end }}
